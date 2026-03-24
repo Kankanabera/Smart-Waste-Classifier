@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- Store images in the cache directory so they are automatically cleaned up -->
+    <cache-path name="camera_images" path="." />
+</paths>

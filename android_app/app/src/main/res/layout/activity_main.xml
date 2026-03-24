@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- ── App Title ─────────────────────────────────────────────────── -->
+        <TextView
+            android:id="@+id/tvAppTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="♻ EcoSort AI"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="#1B5E20"
+            android:gravity="center"
+            android:paddingBottom="16dp" />
+
+        <!-- ── Image Preview ─────────────────────────────────────────────── -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:background="@drawable/rounded_image_bg"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:id="@+id/imageViewPreview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="Selected waste image preview"
+                android:src="@drawable/ic_image_placeholder" />
+
+            <!-- Dim overlay + hint label when no image is selected -->
+            <TextView
+                android:id="@+id/tvImageHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Tap a button below\nto add an image"
+                android:textColor="#99000000"
+                android:textSize="14sp"
+                android:gravity="center" />
+        </FrameLayout>
+
+        <!-- ── Action Buttons ────────────────────────────────────────────── -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <!-- Camera Button -->
+            <Button
+                android:id="@+id/btnCamera"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="📷  Camera"
+                android:textSize="15sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#2E7D32"
+                android:stateListAnimator="@null"
+                android:elevation="4dp"
+                style="@style/Widget.MaterialComponents.Button" />
+
+            <!-- Gallery Button -->
+            <Button
+                android:id="@+id/btnGallery"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="🖼  Gallery"
+                android:textSize="15sp"
+                android:textColor="#2E7D32"
+                android:backgroundTint="#C8E6C9"
+                android:stateListAnimator="@null"
+                android:elevation="4dp"
+                style="@style/Widget.MaterialComponents.Button" />
+        </LinearLayout>
+
+        <!-- Clear Button (Hidden by default until image is selected) -->
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="✖ Clear Image"
+            android:textColor="#D32F2F"
+            android:backgroundTint="#FFEBEE"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            style="@style/Widget.MaterialComponents.Button.TextButton" />
+
+        <!-- ── Loading Indicator (shown during inference) ───────────────── -->
+        <LinearLayout
+            android:id="@+id/layoutLoading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingBottom="16dp"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:indeterminateTint="#2E7D32" />
+
+            <TextView
+                android:id="@+id/tvAnalyzing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Analyzing image..."
+                android:textSize="13sp"
+                android:textColor="#555555"
+                android:paddingTop="6dp" />
+
+        </LinearLayout>
+
+        <!-- ── Results Card ──────────────────────────────────────────────── -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <!-- Section header -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Classification Result"
+                    android:textSize="13sp"
+                    android:textColor="#333333"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.08"
+                    android:paddingBottom="12dp" />
+
+                <!-- ① Predicted waste type -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Waste Type"
+                    android:textSize="12sp"
+                    android:textColor="#555555"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@+id/tvPredictedType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="#000000"
+                    android:paddingBottom="4dp"
+                    tools:text="Plastic" />
+
+                <!-- Confidence score -->
+                <TextView
+                    android:id="@+id/tvConfidenceScore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textSize="14sp"
+                    android:textColor="#2E7D32"
+                    android:paddingBottom="16dp"
+                    tools:text="Confidence: 92.35%" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- ② Recyclability / Compostability -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Category"
+                    android:textSize="12sp"
+                    android:textColor="#555555"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@+id/tvRecyclability"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textSize="17sp"
+                    android:textColor="#000000"
+                    android:paddingBottom="16dp"
+                    tools:text="✅ Recyclable" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- ③ Disposal Guidance -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Disposal Guidance"
+                    android:textSize="12sp"
+                    android:textColor="#555555"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@+id/tvDisposalGuidance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textSize="15sp"
+                    android:textColor="#000000"
+                    android:lineSpacingMultiplier="1.4"
+                    tools:text="Place in the blue recycling bin. Rinse before disposal to avoid contamination." />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ── Items Scanned Counter ─────────────────────────────────────── -->
+        <TextView
+            android:id="@+id/tvScanCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Items Scanned: 0"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:paddingBottom="4dp" />
+
+        <!-- ── Recent Scans History ──────────────────────────────────────── -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recent Scans"
+            android:textSize="13sp"
+            android:textColor="#333333"
+            android:textAllCaps="true"
+            android:letterSpacing="0.08"
+            android:paddingTop="20dp"
+            android:paddingBottom="8dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvScanHistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:clipToPadding="false"
+            android:paddingBottom="4dp" />
+
+        <!-- Spacer at the bottom for scroll breathing room -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp" />
+
+    </LinearLayout>
+</ScrollView>

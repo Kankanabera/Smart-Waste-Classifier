@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ic_image_placeholder.xml
+    Vector drawable shown inside the ImageView before the user picks a photo.
+    Depicts a simple image-frame icon with a landscape mountain & sun motif,
+    sized at 96 × 96 dp and tinted in the app's green palette.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp"
+    android:height="96dp"
+    android:viewportWidth="96"
+    android:viewportHeight="96">
+
+    <!-- Outer rounded image-frame border -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#A5D6A7"
+        android:strokeWidth="4"
+        android:pathData="M12,20 Q12,12 20,12 L76,12 Q84,12 84,20 L84,76 Q84,84 76,84 L20,84 Q12,84 12,76 Z" />
+
+    <!-- "Sun" circle in the top-left area of the icon -->
+    <path
+        android:fillColor="#C8E6C9"
+        android:pathData="M36,34 m-8,0 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0" />
+
+    <!-- Mountain / landscape shape in the centre-bottom -->
+    <path
+        android:fillColor="#A5D6A7"
+        android:pathData="M16,68 L40,40 L56,58 L66,46 L80,68 Z" />
+
+    <!-- Subtle bottom bar to ground the icon inside the frame -->
+    <path
+        android:fillColor="#C8E6C9"
+        android:pathData="M16,68 L80,68 L80,76 Q80,80 76,80 L20,80 Q16,80 16,76 Z" />
+
+</vector>

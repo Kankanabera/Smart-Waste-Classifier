@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    rounded_image_bg.xml
+    Background shape for the ImageView preview panel:
+    - Rounded corners (16 dp)
+    - Light grey fill  (#E0E0E0) visible before an image is loaded
+    - Subtle dark border to frame the preview area
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Fill colour shown before any image is loaded -->
+    <solid android:color="#E8F5E9" />
+
+    <!-- Rounded corners matching the card radius used elsewhere -->
+    <corners android:radius="16dp" />
+
+    <!-- Thin green border to frame the preview area -->
+    <stroke
+        android:width="1.5dp"
+        android:color="#A5D6A7" />
+
+</shape>

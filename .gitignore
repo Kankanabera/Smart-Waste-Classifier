@@ -1,0 +1,13 @@
+# Ignore unnecessary files
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+
+# Ignore large ML files
+tflite_model/
+model_training/
+*.h5
+*.tflite
+*.pkl
+*.csv
